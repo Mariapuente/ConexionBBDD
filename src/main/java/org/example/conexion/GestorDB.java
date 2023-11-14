@@ -126,7 +126,7 @@ public class GestorDB implements DataB {
     public void agregarPedido() {
         mostrarProductos();
         Scanner teclado = new Scanner(System.in);
-        String query = "INSERT INTO " + DataB.NOM_TABLA_PEDIDO + " (  " + DataB.ID_PRODUCTO + ", " + DataB.DESCRIPCION_PEDIDO + ", " + DataB.PRECIO_TOTAL_PRODUCTO + ") VALUES (  ?,?,?)";
+        String query = "INSERT INTO " + DataB.NOM_TABLA_PEDIDO + " (  " + DataB.ID_PRODUCTO + ", " + DataB.DESCRIPCION_PEDIDO + ", " + DataB.PRECIO_TOTAL_PRODUCTO + ") VALUES ( ?,?,?)";
 
         System.out.println("A continuacion vamos a añadir un pedido");
         System.out.println("Introduce el ID del producto");
