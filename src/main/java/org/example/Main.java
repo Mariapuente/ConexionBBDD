@@ -13,22 +13,22 @@ public class Main {
         gestorDB.llamarConexion();
         Scanner teclado = new Scanner(System.in);
 
-            System.out.println("Bienvenido al gestor de datos");
-            System.out.println("Por favor, selecciona una de las siguientes opciones");
-            System.out.println("1. Agregar un empleado");
-            System.out.println("2. Agregar un pedido");
-            System.out.println("3. Mostrar empleados");
-            System.out.println("4. Mostrar productos");
-            System.out.println("5. Mostrar pedidos");
-            System.out.println("6. Mostrar productos baratos");
-            System.out.println("7. Salir");
+     System.out.println("Bienvenido al gestor de datos");
+        System.out.println("Por favor, selecciona una de las siguientes opciones");
+        System.out.println("1. Agregar un empleado");
+        System.out.println("2. Agregar un pedido");
+        System.out.println("3. Mostrar empleados");
+        System.out.println("4. Mostrar productos");
+        System.out.println("5. Mostrar pedidos");
+        System.out.println("6. Mostrar productos baratos");
+        System.out.println("7. Salir");
 
-            int opcion = teclado.nextInt();
+        int opcion = teclado.nextInt();
 
 
-        while (  opcion < 7 ){
+        while (opcion < 7) {
             teclado.nextLine();
-            switch (opcion){
+            switch (opcion) {
                 case 1:
                     gestorDB.agregarEmpleado();
                     System.out.println("¿Desea realizar otra operación?, si es así, seleccione el numero correspondiente. De lo contrario, pulse 7");
@@ -62,13 +62,14 @@ public class Main {
                 case 7:
                     break;
 
-                default: System.out.println("Opción incorrecta, selecciona una opción valida");
+                default:
+                    System.out.println("Opción incorrecta, selecciona una opción valida");
             }
         }
 
 
-        //gestorDB.tablaProductos();
-        //gestorDB.productosFavoritos();
+      // gestorDB.tablaProductos();
+      // gestorDB.productosFavoritos();
 
     }
 }

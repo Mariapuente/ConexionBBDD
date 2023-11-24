@@ -1,7 +1,14 @@
 package org.example.conexion;
 
 public interface DataB {
+
+    // --------------------------------------------------------------------------
     String NOM_DB = "almacen";
+    String USER = "MariaBD";
+    String PASSWORD = "290619";
+    String URL = "jdbc:mariadb://";
+    String HOST = "127.0.0.1:3306";
+
 
     // -----------------------------------------------------------------------------
     String NOM_TABLA = "productos";

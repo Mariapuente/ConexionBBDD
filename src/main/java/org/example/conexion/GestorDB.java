@@ -20,11 +20,7 @@ public class GestorDB implements DataB {
     }
 
     public void getConexion() {
-        String NombreUsuario = "MariaPB";
-        String Password = "290619";
-        String BaseDatos = "almacen";
-        String Host = "127.0.0.1:3306";
-        String Url = "jdbc:mariadb://" + Host + "/" + BaseDatos;
+
         try {
             //Cargo en memoria el Driver para poder utilizarlo, y pongo el nombre del Driver de mi libreria
             Class.forName("org.mariadb.jdbc.Driver");
@@ -33,7 +29,7 @@ public class GestorDB implements DataB {
         }
         try {
             //Conecto con la base de datos, lo que utilizamos de la clase Driver es el DriverManager.getConnection
-            connection = DriverManager.getConnection(Url, NombreUsuario, Password);
+            connection = DriverManager.getConnection((URL + HOST +"/" + NOM_DB), USER, PASSWORD);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -51,10 +47,11 @@ public class GestorDB implements DataB {
             BufferedReader br = new BufferedReader(new InputStreamReader(conex.getInputStream()));
 
             String lectura = br.readLine();
-            System.out.println(lectura);
+            // System.out.println(lectura);
 
             JSONObject objeto = new JSONObject(lectura);
             JSONArray productos = objeto.getJSONArray("products");
+
             String query = "INSERT INTO " + DataB.NOM_TABLA + " (" + DataB.ID + ", " + DataB.NOMBRE + ", " + DataB.DESCRIPCION + ", " + DataB.CANTIDAD + ", " + DataB.PRECIO + ") VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pst = null;
             try {
@@ -104,23 +101,20 @@ public class GestorDB implements DataB {
         String apellido = teclado.nextLine();
         System.out.println("Introduce el correo");
         String correo = teclado.nextLine();
+
+        PreparedStatement pst = null;
         try {
-            PreparedStatement pst = null;
-            try {
-                pst = connection.prepareStatement(String.format(query));
+            pst = connection.prepareStatement(String.format(query));
 
-                pst.setString(1, nombre.toString());
-                pst.setString(2, apellido.toString());
-                pst.setString(3, correo);
-                pst.execute();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-
-        } catch (RuntimeException e) {
+            pst.setString(1, nombre.toString());
+            pst.setString(2, apellido.toString());
+            pst.setString(3, correo);
+            pst.execute();
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 
     public void agregarPedido() {
@@ -174,19 +168,16 @@ public class GestorDB implements DataB {
         String query = "SELECT * FROM " + DataB.NOM_TABLA;
         System.out.println("Mostrando Productos");
         PreparedStatement pst = null;
-        try {
-            try {
-                pst = connection.prepareStatement(query);
-                ResultSet rs = pst.executeQuery();
-                while (rs.next()) {
-                    System.out.println(rs.getString(1) + "  | " + rs.getString(2) + "  | " + rs.getString(5) + "€");
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
 
-        } catch (RuntimeException e) {
+        try {
+            pst = connection.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                System.out.println(rs.getString(1) + "  | " + rs.getString(2) + "  | " + rs.getString(5) + "€");
+            }
+        } catch (RuntimeException | SQLException e) {
             throw new RuntimeException(e);
+
         }
     }
 
@@ -226,6 +217,7 @@ public class GestorDB implements DataB {
 
 
     }
+
     public void productosFavoritos() {
         String selectQuery = "SELECT " + DataB.ID + " FROM " + DataB.NOM_TABLA + " WHERE " + DataB.PRECIO + " > " + 1000;
 
@@ -275,7 +267,6 @@ public class GestorDB implements DataB {
         }
 
     }
-
 
 
     public void insertarProductosFavoritos(int idProducto) {
